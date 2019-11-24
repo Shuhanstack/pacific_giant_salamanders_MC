@@ -1,0 +1,59 @@
+---
+title: 'Pacific gaint salamenders in Mack Creek: Size and weight vs. channel location in old growth and clear cut forest section'
+author: "Shuhan Song"
+date: "November 23, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# attach packages
+library(tidyverse)
+library(janitor)
+library(here)
+library(janitor)
+library(beeswarm)
+library(kableExtra)
+library(plotly)
+
+# load data
+salamander <- read_csv("mack_creek_vertebrates.csv") %>% 
+  clean_names() %>% 
+  select(year, species, section, unittype, weight) %>% 
+  filter(species == "DITE") %>% 
+  filter(unittype %in% c("P", "C", "SC"))
+```
+
+###Introduction
+
+###Data and Methods
+
+###Results
+
+#####Result A. Visually compare annual salamander counts in old growth (OG) and clear cut (CC) sections of Mack Creek.
+
+```{r}
+# count annual count of salamanders in sections (OG, CC)
+annual_count <- salamander %>% 
+  count(year, section)
+
+annual_count_plot <- ggplot(data = annual_count, 
+       aes(x = year, y = n)) +
+  geom_point(aes(color = section)) +
+  geom_line(aes(color = section)) +
+  scale_x_continuous(breaks = c(1995, 2000, 2005, 2010, 2015)) +
+  scale_color_discrete(name = "Sections",
+                       labels = c("Clear cut", "Old growth")) +
+  theme_light() +
+  labs(x = "Year",
+       y = "Count")
+
+ggplotly(annual_count_plot)
+```
+
+_**Figure 1**: Annual count of Pacific gaint salamanders in clear cut or old growth sections of Mack Creek (1993-2017). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, dropped from 2011 to 2014, then increased again until 2017. In most years, salamanders in old growth sections have greater counts than those in clear cut sections._
+
+###Summary
+
+###References
