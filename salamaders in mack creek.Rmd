@@ -16,6 +16,7 @@ library(janitor)
 library(beeswarm)
 library(kableExtra)
 library(plotly)
+library(effsize)
 
 # load data
 salamander <- read_csv("mack_creek_vertebrates.csv") %>% 
@@ -31,7 +32,7 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
 
 ###Results
 
-#####Result A. Visually compare annual salamander counts in old growth (OG) and clear cut (CC) sections of Mack Creek.
+####A. Visually compare annual salamander counts in old growth (OG) and clear cut (CC) sections of Mack Creek.
 
 ```{r}
 # count annual count of salamanders in sections (OG, CC)
@@ -44,7 +45,7 @@ annual_count_plot <- ggplot(data = annual_count,
   geom_line(aes(color = section)) +
   scale_x_continuous(breaks = c(1995, 2000, 2005, 2010, 2015)) +
   scale_color_discrete(name = "Sections",
-                       labels = c("Clear cut", "Old growth")) +
+                       labels = c("CC", "OG")) +
   theme_light() +
   labs(x = "Year",
        y = "Count")
@@ -52,7 +53,35 @@ annual_count_plot <- ggplot(data = annual_count,
 ggplotly(annual_count_plot)
 ```
 
-_**Figure 1**: Annual count of Pacific gaint salamanders in clear cut or old growth sections of Mack Creek (1993-2017). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, dropped from 2011 to 2014, then increased again until 2017. In most years, salamanders in old growth sections have greater counts than those in clear cut sections._
+_**Figure 1**: Annual count of Pacific gaint salamanders in CC or OG sections of Mack Creek (1993-2017). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, dropped from 2011 to 2014, then increased again until 2017. In most years, salamanders in old growth sections have greater counts than those in clear cut sections._
+
+####B. Salamander counts by channel classification and sections of Mack Creek in 2017.
+
+_**Table 1**: Salamander count and proportions by channel classification (pool, cascades, and side-channel) in OG and CC in 2017. In CC section, 67.1% observations are from cascades (n = 247), 8.4% from pools (n = 31), and 24.5% from side channels (n = 90). In OG section, 62.8% observations are from cascades (n = 201), 14.1% from pools (n = 45), and 23.1% from side channels (n = 74)._
+
+```{r}
+salamander_2017 <- salamander %>% 
+  filter(year == 2017)
+
+# create contigency table: count section and channel class, then transform to wider format
+count_2017 <- salamander_2017 %>% 
+  count(section, unittype) %>% 
+  pivot_wider(names_from = unittype, values_from = n)
+
+# add percentage of channel class in each sections to the contigency table
+props_2017 <- count_2017 %>% 
+  adorn_percentages(denominator = "row") %>% 
+  adorn_pct_formatting(digits = 1) %>% 
+  adorn_ns(position = "front")
+
+# format the table 
+props_2017 %>% 
+  kable(col.names = c("Sections", "Cascades","Pool", "Side-channel")) %>% 
+  kable_styling(bootstrap_options = "striped",
+                position = "center",
+                full_width = FALSE)
+```
+
 
 ###Summary
 
