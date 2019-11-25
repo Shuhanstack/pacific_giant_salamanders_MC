@@ -57,7 +57,7 @@ _**Figure 1**: Annual count of Pacific gaint salamanders in CC or OG sections of
 
 ####B. Salamander counts by channel classification and sections of Mack Creek in 2017.
 
-_**Table 1**: Salamander count and proportions by channel classification (pool, cascades, and side-channel) in OG and CC in 2017. In CC section, 67.1% observations are from cascades (n = 247), 8.4% from pools (n = 31), and 24.5% from side channels (n = 90). In OG section, 62.8% observations are from cascades (n = 201), 14.1% from pools (n = 45), and 23.1% from side channels (n = 74)._
+_**Table 1**: Salamander count and proportions by channel classification (cascades, pool, and side-channel) in OG and CC in 2017. In CC section, 67.1% observations are from cascades (n = 247), 8.4% from pools (n = 31), and 24.5% from side channels (n = 90). In OG section, 62.8% observations are from cascades (n = 201), 14.1% from pools (n = 45), and 23.1% from side channels (n = 74)._
 
 ```{r}
 salamander_2017 <- salamander %>% 
@@ -81,6 +81,14 @@ props_2017 %>%
                 position = "center",
                 full_width = FALSE)
 ```
+
+####C. Is there a significant difference in where in the channel Pacific giant salamanders are located between the two forest condition (OG and CC)?
+```{r}
+chi_2017 <- chisq.test(count_2017[, -1])
+
+```
+
+There is no significant effect of forest conditions (GO/CC) on where in the channel salamanders are located (cascades/pool/side-channel) ($\chi$^2^(`r chi_2017$parameter`) = `r round(chi_2017$statistic,2)`, *p* = `r round(chi_2017$p.value, 2)`). Salamanders from old growth and clear cut sections in the forest have no different chances to be spotted in cascades (OG = `r props_2017[[2, 2]]`, CC = `r  props_2017[[1, 2]]`), pool (OG = `r props_2017[[2, 3]]`, CC = `r props_2017[[1, 2]]`), and side-chanel (OG = `r props_2017[[2, 4]]`, CC = `r props_2017[[1, 4]]`).
 
 
 ###Summary
