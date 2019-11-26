@@ -6,14 +6,14 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
 # attach packages
 library(tidyverse)
 library(janitor)
 library(here)
 library(janitor)
-library(beeswarm)
+library(ggbeeswarm)
 library(kableExtra)
 library(plotly)
 library(effsize)
@@ -53,11 +53,13 @@ annual_count_plot <- ggplot(data = annual_count,
 ggplotly(annual_count_plot)
 ```
 
-_**Figure 1**: Annual count of Pacific gaint salamanders in CC or OG sections of Mack Creek (1993-2017). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, dropped from 2011 to 2014, then increased again until 2017. In most years, salamanders in old growth sections have greater counts than those in clear cut sections._
+_**Figure 1**: Annual count of Pacific gaint salamanders in CC or OG sections of Mack Creek (1993-2017). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, dropped from 2011 to 2014, then increased again until 2017. In most years, salamanders in old growth sections have greater counts than those in clear cut sections. Data source: Andrews Forest LTER Site_
+
+------------------------------------
 
 ####B. Salamander counts by channel classification and sections of Mack Creek in 2017.
 
-_**Table 1**: Salamander count and proportions by channel classification (cascades, pool, and side-channel) in OG and CC in 2017. In CC section, 67.1% observations are from cascades (n = 247), 8.4% from pools (n = 31), and 24.5% from side channels (n = 90). In OG section, 62.8% observations are from cascades (n = 201), 14.1% from pools (n = 45), and 23.1% from side channels (n = 74)._
+_**Table 1**: Numbers of salamanders within Mack Creek in 2017. Values indicated are counts and proportions (by sections) in channel units (cascades, pool, and side-channel). In CC section, 67.1% observations are from cascades (n = 247), 8.4% from pools (n = 31), and 24.5% from side channels (n = 90). In OG section, 62.8% observations are from cascades (n = 201), 14.1% from pools (n = 45), and 23.1% from side channels (n = 74). Data source: Andrews Forest LTER Site_
 
 ```{r}
 salamander_2017 <- salamander %>% 
@@ -82,13 +84,129 @@ props_2017 %>%
                 full_width = FALSE)
 ```
 
+------------------------------------
+
 ####C. Is there a significant difference in where in the channel Pacific giant salamanders are located between the two forest condition (OG and CC)?
 ```{r}
 chi_2017 <- chisq.test(count_2017[, -1])
-
 ```
 
-There is no significant effect of forest conditions (GO/CC) on where in the channel salamanders are located (cascades/pool/side-channel) ($\chi$^2^(`r chi_2017$parameter`) = `r round(chi_2017$statistic,2)`, *p* = `r round(chi_2017$p.value, 2)`). Salamanders from old growth and clear cut sections in the forest have no different chances to be spotted in cascades (OG = `r props_2017[[2, 2]]`, CC = `r  props_2017[[1, 2]]`), pool (OG = `r props_2017[[2, 3]]`, CC = `r props_2017[[1, 2]]`), and side-chanel (OG = `r props_2017[[2, 4]]`, CC = `r props_2017[[1, 4]]`).
+There is no significant effect of forest conditions (OG/CC) on where in the channel salamanders are located (cascades/pool/side-channel) ($\chi$^2^(`r chi_2017$parameter`) = `r round(chi_2017$statistic,2)`, *p* = `r round(chi_2017$p.value, 2)`). Salamanders from old growth and clear cut sections in the forest have no different chances to be spotted in cascades (OG = `r props_2017[[2, 2]]`, CC = `r  props_2017[[1, 2]]`), pool (OG = `r props_2017[[2, 3]]`, CC = `r props_2017[[1, 2]]`), and side-chanel (OG = `r props_2017[[2, 4]]`, CC = `r props_2017[[1, 4]]`).
+
+------------------------------------
+
+####D. Compare weights of Pacific giant salamanders in OG and CC forest sections of the creek in 2017.
+```{r, include = FALSE}
+# check normality
+ggplot(data = salamander_2017, aes(x = weight)) +
+  geom_histogram(aes(fill = section)) +
+  facet_wrap(~section)
+
+ggplot(data = salamander_2017, aes(sample = weight)) +
+  geom_qq(aes(fill = section)) +
+  facet_wrap(~section)
+
+# note: the data set is not normally distributed
+```
+
+
+```{r}
+weight_summary <- salamander_2017 %>% 
+  group_by(section) %>% 
+  summarize(mean = round(mean(weight, na.rm = TRUE), 2),
+            stdv = round(sqrt(var(weight, na.rm = TRUE)), 2),
+            count = n(),
+            median = round(median(weight, na.rm = TRUE), 2)
+            )
+
+# the dataset has large numbers of data which allow using t-test on mean
+
+# t-test on weight from the two forest sections
+ttest_section_2017 <- t.test(weight ~ section, data = salamander_2017)
+
+# effect size
+weight_OG <- salamander_2017 %>% 
+  filter(section == "OG")
+weight_CC <- salamander_2017 %>% 
+  filter(section == "CC")
+d_section <- cohen.d(weight_OG$weight, weight_CC$weight, na.rm = TRUE)
+```
+
+Although weight in both forest sections (OG/CC) are positively skewed, the large number of data (OG = `r weight_summary$count[2]`, CC = `r weight_summary$count[1]`) allow us to use a two-sample t-test to compare the mean (Figure 2). 
+
+
+```{r}
+ggplot() +
+  geom_beeswarm(data = salamander_2017, 
+                aes(x = section, 
+                    y = weight),
+                size = 0.2) +
+  geom_point(data = weight_summary, 
+             aes(x = section, y = mean), 
+             size = 1,
+             color = "red") +
+  geom_errorbar(data = weight_summary,
+                aes(x = section, 
+                    ymin = mean - stdv,
+                    ymax = mean + stdv),
+                width = 0.05,
+                color = "red") +
+  scale_x_discrete(labels = c("Clear cut", "Old growth")) +
+  labs(x = "Forest section", y = "Salamanders weight (gram)") +
+  theme_light()
+```
+
+_**Figure 2**: The weight of Pacific gaint salamanders in forest sections (CC/OG) in 2017. The distributions of weight in both forest sections are positively skewed. Salamanders in CC forest section have weight `r weight_summary$mean[1]`$\pm$ `r weight_summary$stdv[1]` gram (n = `r weight_summary$count[1]`) while those in OG sections have weight `r weight_summary$mean[2]`$\pm$ `r weight_summary$stdv[2]` gram (n = `r weight_summary$count[2]`). Data source: Andrews Forest LTER Site_
+
+
+For 2017 observations, weight (gram) of Pacific gaint salamanders measured in samples collected from OG sections (`r round(ttest_section_2017$estimate[[2]], 2)` $\pm$ `r weight_summary$stdv[2]`, n = `r weight_summary$count[2]`) differed significantly from salamander weight in CC sections (`r round(ttest_section_2017$estimate[[1]], 2)` $\pm$ `r weight_summary$stdv[1]`, n = `r weight_summary$count[1]`) by a two-sample t-test (t(`r floor(ttest_section_2017$parameter)`) = `r round(ttest_section_2017$statistic, 2)`, *p* = `r ifelse(ttest_section_2017$p.value < 0.001, "< 0.001", round(ttest_section_2017$p.value, 3))`, 95% CI = (`r round(ttest_section_2017$conf.int, 2)`)). 
+
+Based on *p*-value, there was a `r round(ttest_section_2017$p.value, 3)*100`% chance that we could have found two samples at least as different as ours if they were drawn from two populations with the same means, which is not signifcantly low. 
+
+In addition, if we took many samples and found the confidence intervals, we'd expect 95% of those confidence intervals to included the population mean differece. Therefore, it's highly likely that a calculated confidence interval contains the population mean difference, where 0 was included. The difference in salamaders weight between OG and CC forest section was `r round(weight_summary$mean[1] - weight_summary$mean[2], 2)`mm, with a negligible effect size (Cohen's d = `r round(d_section$estimate, 2)`). 
+
+Therefore, we failed to reject the null hypothesis that the weight of Pacific gaint salamanders measured in OG and CC forest sections were the same. The difference in forest conditions did not impact salamanders' weight in Mack Creak samples.
+
+---------------------------------
+
+####E. Weights of Pacific gaint salamanders in pools, cascades, and side-channels of Mack Creek in 2017.
+
+```{r}
+# summary data of weight among channel classifications
+weight_summary_unittype <- salamander_2017 %>% 
+  group_by(unittype) %>% 
+  summarize(mean = round(mean(weight, na.rm = TRUE), 2),
+            stdv = round(sqrt(var(weight, na.rm = TRUE)), 2),
+            count = n(),
+            median = round(median(weight, na.rm = TRUE), 2)
+            )
+```
+
+
+```{r}
+# visualize salamander weights among the three channel classifications
+
+ggplot() +
+  geom_beeswarm(data = salamander_2017, 
+                aes(x = unittype, 
+                    y = weight),
+                size = 0.2) +
+  geom_point(data = weight_summary_unittype, 
+             aes(x = unittype, 
+                 y = mean), 
+             size = 1,
+             color = "red") +
+  geom_errorbar(data = weight_summary_unittype,
+                aes(x = unittype, 
+                    ymin = mean - stdv,
+                    ymax = mean + stdv),
+                width = 0.05,
+                color = "red") +
+  scale_x_discrete(labels = c("Cascadea", "Pool", "Side-channel")) +
+  labs(x = "Channel classificantion", y = "Salamanders weight (gram)") +
+  theme_light()
+```
+
 
 
 ###Summary
