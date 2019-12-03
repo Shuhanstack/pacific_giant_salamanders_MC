@@ -140,7 +140,7 @@ weight_CC <- salamander_2017 %>%
 d_section <- cohen.d(weight_OG$weight, weight_CC$weight, na.rm = TRUE)
 ```
 
-Although weight in both forest sections (OG/CC) are positively skewed, the large number of data (OG = `r weight_summary$count[2]`, CC = `r weight_summary$count[1]`) allow us to use a two-sample t-test to compare the mean (Figure 2). 
+Although salamander weights in both forest sections (OG/CC) were positively skewed, the large data size ( CC = `r weight_summary$count[1]`, OG = `r weight_summary$count[2]`) allowed us to use a two-sample t-test to compare the population means in CC and OG (Figure 2). 
 
 
 ```{r}
@@ -164,16 +164,16 @@ ggplot() +
   theme_light()
 ```
 
-_**Figure 2**: The weight of Pacific gaint salamanders in forest sections (CC/OG) in 2017. The distributions of weight in both forest sections are positively skewed. Salamanders in CC forest section have weight `r weight_summary$mean[1]` $\pm$ `r weight_summary$stdv[1]` gram (n = `r weight_summary$count[1]`) while those in OG sections have weight `r weight_summary$mean[2]` $\pm$ `r weight_summary$stdv[2]` gram (n = `r weight_summary$count[2]`). Data source: Andrews Forest LTER Site._
+_**Figure 2**: The weight of Pacific gaint salamanders in forest sections (CC/OG) in 2017. The distributions of weight in both forest sections were positively skewed. Salamanders in CC forest section have weight `r weight_summary$mean[1]` $\pm$ `r weight_summary$stdv[1]` gram (n = `r weight_summary$count[1]`) while those in OG sections have weight `r weight_summary$mean[2]` $\pm$ `r weight_summary$stdv[2]` gram (n = `r weight_summary$count[2]`). Data source: Andrews Forest LTER Site._
 
 
-For 2017 observations, mean weight (gram) of Pacific gaint salamanders measured in samples collected from OG sections (`r round(ttest_section_2017$estimate[[2]], 2)` $\pm$ `r weight_summary$stdv[2]`, n = `r weight_summary$count[2]`) differed significantly from salamander mean weight in CC sections (`r round(ttest_section_2017$estimate[[1]], 2)` $\pm$ `r weight_summary$stdv[1]`, n = `r weight_summary$count[1]`) by a two-sample t-test (t(`r floor(ttest_section_2017$parameter)`) = `r round(ttest_section_2017$statistic, 2)`, *p* = `r ifelse(ttest_section_2017$p.value < 0.001, "< 0.001", round(ttest_section_2017$p.value, 3))`, 95% CI = (`r round(ttest_section_2017$conf.int, 2)`)). 
+For 2017 observations, the average weights of Pacific gaint salamanders differed significantly for samples collected from OG sections (`r round(ttest_section_2017$estimate[[2]], 2)` $\pm$ `r weight_summary$stdv[2]`, n = `r weight_summary$count[2]`) and CC sections (`r round(ttest_section_2017$estimate[[1]], 2)` $\pm$ `r weight_summary$stdv[1]`, n = `r weight_summary$count[1]`) based on the two-sample t-test (t(`r floor(ttest_section_2017$parameter)`) = `r round(ttest_section_2017$statistic, 2)`, *p* = `r round(ttest_section_2017$p.value, 3)`, 95% CI = (`r round(ttest_section_2017$conf.int, 2)`)). 
 
 Based on *p*-value, there was a `r round(ttest_section_2017$p.value, 3)*100`% chance that we could have found two samples at least as different as ours if they were drawn from two populations with the same means, which is not signifcantly low. 
 
-In addition, if we took many samples and found the confidence intervals, we'd expect 95% of those confidence intervals to included the population mean differece. Therefore, it's highly likely that a calculated confidence interval contains the population mean difference, where 0 was included. The difference in salamaders weight between OG and CC forest section was `r round(weight_summary$mean[1] - weight_summary$mean[2], 2)`mm, with a negligible effect size (Cohen's d = `r round(d_section$estimate, 2)`). 
+In addition, if we took many samples and found the confidence intervals, we'd expect 95% of those confidence intervals to included the population mean differece as what we have obtained. Therefore, it's highly likely that a calculated confidence interval contains the population mean difference, where 0 was included. The difference in salamaders weight between OG and CC forest section was `r round(weight_summary$mean[1] - weight_summary$mean[2], 2)`mm, with a negligible effect size (Cohen's d = `r round(d_section$estimate, 2)`). 
 
-Therefore, we failed to reject the null hypothesis that the weight of Pacific gaint salamanders measured in OG and CC forest sections were the same. The difference in forest conditions did not impact salamanders' weight in Mack Creak samples.
+Therefore, we failed to reject the null hypothesis that the weight of Pacific gaint salamanders measured in CC and OG forest sections were the same. The difference in forest conditions (CC/OG) did not impact salamanders' weight in Mack Creak samples.
 
 ---------------------------------
 
