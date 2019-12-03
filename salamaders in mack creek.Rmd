@@ -23,8 +23,7 @@ library(car)
 salamander <- read_csv("mack_creek_vertebrates.csv") %>% 
   clean_names() %>% 
   select(year, species, section, unittype, weight) %>% 
-  filter(species == "DITE") %>% 
-  filter(unittype %in% c("P", "C", "SC"))
+  filter(species == "DITE")
 ```
 
 ### Introduction
@@ -61,12 +60,13 @@ _**Figure 1**: Annual count of Pacific gaint salamanders in clear cut (CC) or ol
 
 ------------------------------------
 
-#### B. Salamander counts by channel classification and sections of Mack Creek in 2017.
+#### B. Salamander counts by channel classification and forest sections of Mack Creek in 2017.
 
 _**Table 1**: Numbers of salamanders within Mack Creek in 2017. Values indicated are counts and proportions (by sections) in channel units (cascades, pool, and side-channel). In CC section, 67.1% observations are from cascades (n = 247), 8.4% from pools (n = 31), and 24.5% from side channels (n = 90). In OG section, 62.8% observations are from cascades (n = 201), 14.1% from pools (n = 45), and 23.1% from side channels (n = 74). Data source: Andrews Forest LTER Site._
 
 ```{r}
-salamander_2017 <- salamander %>% 
+salamander_2017 <- salamander%>% 
+  filter(unittype %in% c("P", "C", "SC")) %>% 
   filter(year == 2017)
 
 # create contigency table: count section and channel class, then transform to wider format
