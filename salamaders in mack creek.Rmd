@@ -60,9 +60,9 @@ _**Figure 1**: Annual count of Pacific gaint salamanders in clear cut (CC) or ol
 
 ------------------------------------
 
-#### B. Salamander counts by channel classification and forest sections of Mack Creek in 2017.
+#### B. Salamander counts by channel classification (cascades, pool, and side-channel) and forest sections of Mack Creek in 2017.
 
-_**Table 1**: Numbers of salamanders within Mack Creek in 2017. Values indicated are counts and proportions (by sections) in channel units (cascades, pool, and side-channel). In CC section, 67.1% observations are from cascades (n = 247), 8.4% from pools (n = 31), and 24.5% from side channels (n = 90). In OG section, 62.8% observations are from cascades (n = 201), 14.1% from pools (n = 45), and 23.1% from side channels (n = 74). Data source: Andrews Forest LTER Site._
+We summarized the number and proportion of Pacific gaint salamanders observed in all channel and forest sections (Table 1). The porportions of salamaders spotted in CC and OG were similar for all three channel classifications.
 
 ```{r}
 salamander_2017 <- salamander%>% 
@@ -79,7 +79,11 @@ props_2017 <- count_2017 %>%
   adorn_percentages(denominator = "row") %>% 
   adorn_pct_formatting(digits = 1) %>% 
   adorn_ns(position = "front")
+```
 
+_**Table 1**: Numbers of salamanders within Mack Creek in 2017. Values indicated are counts and proportions (by sections) in channel units (cascades, pool, and side-channel). In CC section, `r props_2017[1, 2]` observations are from cascades, `r props_2017[1, 3]` from pools, and `r props_2017[1, 4]` from side channels. In OG section, `r props_2017[2, 2]` observations are from cascades, `r props_2017[2, 3]` from pools, and `r props_2017[2, 4]` from side channels. Data source: Andrews Forest LTER Site._
+
+```{r}
 # format the table 
 props_2017 %>% 
   kable(col.names = c("Sections", "Cascades","Pool", "Side-channel")) %>% 
