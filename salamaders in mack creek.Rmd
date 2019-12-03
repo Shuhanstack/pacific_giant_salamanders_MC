@@ -30,11 +30,13 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
 
 ### Data and Methods
 
+The monitoring data of Pacific gaint salamanders was collected and provided by [Andrews Forest LTER Site](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-and&identifier=4027&revision=12) and made accessible by EDI Data Protal. The data was collected from a section of clear cut forest and an upstream 500-year-old coniferous forest in Mack Creek (Gregory 2016). In this study, only data associated with Pacific giant salamander were used which narrowed the year range to 1993-2017. We summed and visualized the annual count of salamanders during this time period for clear cut (CC) and old growth (OG) forest sections. Then, we focused on observations in 2017 and added channel classification into analysis by selecting salamanders observed in cascades, pool, and side-channel. A chi-squared test was used to evaluate the associated effect of forest sections and channel classifications on salamander distribution. An unpaired two-sample t-test was used to test if the populations in CC and OG had equal means of weight in 2017. Lastly, we used one-way unbalanced ANOVA to compare the populations means across channel classification groups. For all tests, we checked assumptions if necessary and chose 95% significant level ($\alpha$ = 0.05) for inference. All analyses and figures were prepared using R software version 3.6.1.
+
 ### Results
 
 #### A. Visually compare annual salamander counts in old growth (OG) and clear cut (CC) sections of Mack Creek.
 
-The annual count of Pacific gaint salamanders was visualized for comparison between two groups of forest sections (CC/OG) of Mack Creek from 1993-2017 (Figure 1). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, then fluctuated from 2011 to 2017 but did not drop back to the lowest levels in late 1990s. In most years, salamanders in OG sections had greater counts and seemed to be more robust to survival pressures than those in CC sections.
+The annual count of Pacific gaint salamanders was visualized for comparison between two groups of forest sections (CC/OG) of Mack Creek from 1993-2017 (Figure 1). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, then fluctuated from 2011 to 2017 but did not drop back to the lowest levels in late 1990s. In most years, salamanders in OG section had greater counts and seemed to be more robust to survival pressures than those in CC section.
 
 ```{r}
 # count annual count of salamanders in sections (OG, CC)
@@ -56,7 +58,7 @@ annual_count_plot <- ggplot(data = annual_count,
 ggplotly(annual_count_plot)
 ```
 
-_**Figure 1**: Annual count of Pacific gaint salamanders in clear cut (CC) or old growth (OG) forest sections of Mack Creek (1993-2017). The red line and points represent the annual count of salamanders in CC sections. The green line and points show the annual count of salamanders in OG sections. Data source: Andrews Forest LTER Site._
+_**Figure 1**: Annual count of Pacific gaint salamanders in clear cut (CC) or old growth (OG) forest sections of Mack Creek (1993-2017). The red line and points represent the annual count of salamanders in CC section. The green line and points show the annual count of salamanders in OG section. Data source: Andrews Forest LTER Site._
 
 ------------------------------------
 
@@ -99,7 +101,7 @@ props_2017 %>%
 chi_2017 <- chisq.test(count_2017[, -1])
 ```
 
-There is no significant effect of forest conditions (OG/CC) on where in the channel salamanders are located (cascades/pool/side-channel) ($\chi$^2^(`r chi_2017$parameter`) = `r round(chi_2017$statistic,2)`, *p* = `r round(chi_2017$p.value, 3)`). Salamanders from old growth and clear cut sections in the forest have no different chances to be spotted in cascades (OG = `r props_2017[[2, 2]]`, CC = `r  props_2017[[1, 2]]`), pool (OG = `r props_2017[[2, 3]]`, CC = `r props_2017[[1, 2]]`), and side-chanel (OG = `r props_2017[[2, 4]]`, CC = `r props_2017[[1, 4]]`).
+There is no significant effect of forest conditions (OG/CC) on where in the channel salamanders are located (cascades/pool/side-channel) ($\chi$^2^(`r chi_2017$parameter`) = `r round(chi_2017$statistic,2)`, *p* = `r round(chi_2017$p.value, 3)`). Salamanders from old growth and clear cut section in the forest have no different chances to be spotted in cascades (OG = `r props_2017[[2, 2]]`, CC = `r  props_2017[[1, 2]]`), pool (OG = `r props_2017[[2, 3]]`, CC = `r props_2017[[1, 2]]`), and side-chanel (OG = `r props_2017[[2, 4]]`, CC = `r props_2017[[1, 4]]`).
 
 ------------------------------------
 
@@ -164,14 +166,14 @@ ggplot() +
   theme_light()
 ```
 
-_**Figure 2**: The weight of Pacific gaint salamanders in forest sections (CC/OG) in 2017. The distributions of weight in both forest sections were positively skewed. Salamanders in CC forest section have weight `r weight_summary$mean[1]` $\pm$ `r weight_summary$stdv[1]` gram (n = `r weight_summary$count[1]`) while those in OG sections have weight `r weight_summary$mean[2]` $\pm$ `r weight_summary$stdv[2]` gram (n = `r weight_summary$count[2]`). Data source: Andrews Forest LTER Site._
+_**Figure 2**: The weight of Pacific gaint salamanders in forest sections (CC/OG) in 2017. The distributions of weight in both forest sections were positively skewed. Salamanders in CC forest section have weight `r weight_summary$mean[1]` $\pm$ `r weight_summary$stdv[1]` gram (n = `r weight_summary$count[1]`) while those in OG section have weight `r weight_summary$mean[2]` $\pm$ `r weight_summary$stdv[2]` gram (n = `r weight_summary$count[2]`). Data source: Andrews Forest LTER Site._
 
 
-For 2017 observations, the average weights of Pacific gaint salamanders differed significantly for samples collected from OG sections (`r round(ttest_section_2017$estimate[[2]], 2)` $\pm$ `r weight_summary$stdv[2]`, n = `r weight_summary$count[2]`) and CC sections (`r round(ttest_section_2017$estimate[[1]], 2)` $\pm$ `r weight_summary$stdv[1]`, n = `r weight_summary$count[1]`) based on the two-sample t-test (t(`r floor(ttest_section_2017$parameter)`) = `r round(ttest_section_2017$statistic, 2)`, *p* = `r round(ttest_section_2017$p.value, 3)`, 95% CI = (`r round(ttest_section_2017$conf.int, 2)`)). 
+For 2017 observations, the average weights of Pacific gaint salamanders differed significantly for samples collected from OG section (`r round(ttest_section_2017$estimate[[2]], 2)` $\pm$ `r weight_summary$stdv[2]`, n = `r weight_summary$count[2]`) and CC section (`r round(ttest_section_2017$estimate[[1]], 2)` $\pm$ `r weight_summary$stdv[1]`, n = `r weight_summary$count[1]`) based on the two-sample t-test (t(`r floor(ttest_section_2017$parameter)`) = `r round(ttest_section_2017$statistic, 2)`, *p* = `r round(ttest_section_2017$p.value, 3)`, 95% CI = (`r round(ttest_section_2017$conf.int, 2)`)). 
 
 Based on *p*-value, there was a `r round(ttest_section_2017$p.value, 3)*100`% chance that we could have found two samples at least as different as ours if they were drawn from two populations with the same means, which is not signifcantly low. 
 
-In addition, if we took many samples and found the confidence intervals, we'd expect 95% of those confidence intervals to included the population mean differece as what we have obtained. Therefore, it's highly likely that a calculated confidence interval contains the population mean difference, where 0 was included. The difference in salamaders weight between OG and CC forest section was `r round(weight_summary$mean[1] - weight_summary$mean[2], 2)`mm, with a negligible effect size (Cohen's d = `r round(d_section$estimate, 2)`). 
+In addition, if we took many samples and found the confidence intervals, we'd expect 95% of those confidence intervals to included the population mean differece as what we have obtained. Therefore, it's highly likely that a calculated confidence interval contains the population mean difference, where 0 was included. The difference in salamaders weight between OG and CC forest sections was `r round(weight_summary$mean[1] - weight_summary$mean[2], 2)`mm, with a negligible effect size (Cohen's d = `r round(d_section$estimate, 2)`). 
 
 Therefore, we failed to reject the null hypothesis that the weight of Pacific gaint salamanders measured in CC and OG forest sections were the same. The difference in forest conditions (CC/OG) did not impact salamanders' weight in Mack Creak samples.
 
@@ -241,7 +243,7 @@ Finally, despite ANOVA assumptions were met and the test gave us effective and r
 
 ### Summary
 
-- The annual count of Pacific gaint salamaders increased from 1993 to 2011, then fluctuated from 2011 to 2017 around a higher level. There was no apparant difference in the trend between the two forest sections (CC/OG) except salamanders in OG sections had slightly higher counts and seemed to be more robust to survival pressures - **Figure 1**
+- The annual count of Pacific gaint salamaders increased from 1993 to 2011, then fluctuated from 2011 to 2017 around a higher level. There was no apparant difference in the trend between the two forest sections (CC/OG) except salamanders in OG section had slightly higher counts and seemed to be more robust to survival pressures - **Figure 1**
 
 - Most Pacific gaint salamanders were spotted in channel cascades, followed by side-channels, then least were found in the pools. The proportions of salamaders observed in forest sections CC and OG were similar for all three channel classifications - **Table 1**
 
@@ -253,3 +255,5 @@ Finally, despite ANOVA assumptions were met and the test gave us effective and r
 
 
 ### References
+
+**Gregory S. V. 2016.** Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 11/19/2019.
