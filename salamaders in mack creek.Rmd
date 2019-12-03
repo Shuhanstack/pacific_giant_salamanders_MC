@@ -27,13 +27,15 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
   filter(unittype %in% c("P", "C", "SC"))
 ```
 
-###Introduction
+### Introduction
 
-###Data and Methods
+### Data and Methods
 
-###Results
+### Results
 
-####A. Visually compare annual salamander counts in old growth (OG) and clear cut (CC) sections of Mack Creek.
+#### A. Visually compare annual salamander counts in old growth (OG) and clear cut (CC) sections of Mack Creek.
+
+The annual count of Pacific gaint salamanders was visualized for comparison between two groups of forest sections (CC/OG) of Mack Creek from 1993-2017 (Figure 1). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, then fluctuated from 2011 to 2017 but did not drop back to the lowest levels in late 1990s. In most years, salamanders in OG sections had greater counts and seemed to be more robust to survival pressures than those in CC sections.
 
 ```{r}
 # count annual count of salamanders in sections (OG, CC)
@@ -55,13 +57,11 @@ annual_count_plot <- ggplot(data = annual_count,
 ggplotly(annual_count_plot)
 ```
 
-_**Figure 1**: Annual count of Pacific gaint salamanders in clear cut (CC) or old growth (OG) forest sections of Mack Creek (1993-2017). The red line and points represent the annual count of salamanders in CC section. The green line and points show the annual count of salamanders in OG sections. Data source: Andrews Forest LTER Site._
-
-The annual count of Pacific gaint salamanders grouped by forest sections (CC/OG) is visualized for comparison from 1993 to 2017 (Figure 1). In both sections, the count of Pacific gaint salamanders generally increased from 1993 to 2011, dropped from 2011 to 2014, then increased again until 2017. In most years, salamanders in old growth sections have greater counts than those in clear cut sections.
+_**Figure 1**: Annual count of Pacific gaint salamanders in clear cut (CC) or old growth (OG) forest sections of Mack Creek (1993-2017). The red line and points represent the annual count of salamanders in CC sections. The green line and points show the annual count of salamanders in OG sections. Data source: Andrews Forest LTER Site._
 
 ------------------------------------
 
-####B. Salamander counts by channel classification and sections of Mack Creek in 2017.
+#### B. Salamander counts by channel classification and sections of Mack Creek in 2017.
 
 _**Table 1**: Numbers of salamanders within Mack Creek in 2017. Values indicated are counts and proportions (by sections) in channel units (cascades, pool, and side-channel). In CC section, 67.1% observations are from cascades (n = 247), 8.4% from pools (n = 31), and 24.5% from side channels (n = 90). In OG section, 62.8% observations are from cascades (n = 201), 14.1% from pools (n = 45), and 23.1% from side channels (n = 74). Data source: Andrews Forest LTER Site._
 
@@ -90,7 +90,7 @@ props_2017 %>%
 
 ------------------------------------
 
-####C. Is there a significant difference in where in the channel Pacific giant salamanders are located between the two forest condition (OG and CC)?
+#### C. Is there a significant difference in where in the channel Pacific giant salamanders are located between the two forest condition (OG and CC)?
 ```{r}
 chi_2017 <- chisq.test(count_2017[, -1])
 ```
@@ -99,7 +99,7 @@ There is no significant effect of forest conditions (OG/CC) on where in the chan
 
 ------------------------------------
 
-####D. Compare weights of Pacific giant salamanders in OG and CC forest sections of the creek in 2017.
+#### D. Compare weights of Pacific giant salamanders in OG and CC forest sections of the creek in 2017.
 ```{r, include = FALSE}
 # check normality
 ggplot(data = salamander_2017, aes(x = weight)) +
@@ -173,7 +173,7 @@ Therefore, we failed to reject the null hypothesis that the weight of Pacific ga
 
 ---------------------------------
 
-####E. Weights of Pacific gaint salamanders in pools, cascades, and side-channels of Mack Creek in 2017.
+#### E. Weights of Pacific gaint salamanders in pools, cascades, and side-channels of Mack Creek in 2017.
 
 ```{r}
 # summary data of weight among channel classifications
@@ -230,6 +230,6 @@ unittype_hsd <- TukeyHSD(unittype_aov)
 Mean weights (gram) of Pacific gaint salamanders differed significantly across all channel classifications (one-way ANOVA with post-hoc Tukey's HSD, F(`r aov_output[1]`, `r aov_output[2]`) = `r round(aov_output[7],2)`, *p* = `r round(aov_output[9],3)`). This result means that salamanders spotted in at least one group of the cascades, pool, or side-channel have a different mean weight than the other groups. Pairwise comparison showed that mean weights of salamanders in side-channel and pool are significantly different (mean difference = `r round(unittype_hsd$unittype[3,1], 2)`, *p adj* = `r round(unittype_hsd$unittype[3,4], 3)`).
 
 
-###Summary
+### Summary
 
-###References
+### References
