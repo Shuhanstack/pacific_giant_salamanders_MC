@@ -38,15 +38,16 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
 ```{r}
 # count annual count of salamanders in sections (OG, CC)
 annual_count <- salamander %>% 
-  count(year, section)
+  count(year, section) %>% 
+  mutate(section = ifelse(section == "CC", "Clear cut", "Old growth")) # write out the full names for ggplotly()
 
 annual_count_plot <- ggplot(data = annual_count, 
        aes(x = year, y = n)) +
   geom_point(aes(color = section)) +
   geom_line(aes(color = section)) +
   scale_x_continuous(breaks = c(1995, 2000, 2005, 2010, 2015)) +
-  scale_color_discrete(name = "Sections",
-                       labels = c("CC", "OG")) +
+  scale_y_continuous(limits = c(0, 400)) +
+  scale_color_discrete(name = "Sections") +
   theme_light() +
   labs(x = "Year",
        y = "Count")
