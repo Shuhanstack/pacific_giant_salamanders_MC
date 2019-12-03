@@ -234,18 +234,22 @@ aov_output <- unlist(summary(unittype_aov))
 unittype_hsd <- TukeyHSD(unittype_aov)
 ```
 
-The average weights of Pacific gaint salamanders differed significantly across all channel classifications (one-way ANOVA with post-hoc Tukey's HSD, F(`r aov_output[1]`, `r aov_output[2]`) = `r round(aov_output[7],2)`, *p* = `r round(aov_output[9],3)`). This result means that salamanders spotted in at least one group of the cascades, pool, or side-channel have a different mean weight than the other groups. Pairwise comparison showed that mean weights of salamanders in side-channel and pool are significantly different (mean difference = `r round(unittype_hsd$unittype[3,1], 2)`, *p adj* = `r round(unittype_hsd$unittype[3,4], 3)`) while comparisons between pool and cascades (mean difference = `r round(unittype_hsd$unittype[1,1], 2)`, *p adj* = `r round(unittype_hsd$unittype[1,4], 3)`), side-channel and cascades (mean difference = `r round(unittype_hsd$unittype[2,1], 2)`, *p adj* = `r round(unittype_hsd$unittype[2,4], 3)`) did not show significant differences.
+The average weights of Pacific gaint salamanders differed significantly across all channel classifications (one-way ANOVA with post-hoc Tukey's HSD, F(`r aov_output[1]`, `r aov_output[2]`) = `r round(aov_output[7],2)`, *p* = `r round(aov_output[9],3)`). This result means that salamanders spotted in at least one group of the cascades, pool, or side-channel had a different mean weight than the other groups. Pairwise comparison showed that mean weights of salamanders in side-channel and pool were significantly different (mean difference = `r round(unittype_hsd$unittype[3,1], 2)`, *p adj* = `r round(unittype_hsd$unittype[3,4], 3)`) while comparisons between pool and cascades (mean difference = `r round(unittype_hsd$unittype[1,1], 2)`, *p adj* = `r round(unittype_hsd$unittype[1,4], 3)`), side-channel and cascades (mean difference = `r round(unittype_hsd$unittype[2,1], 2)`, *p adj* = `r round(unittype_hsd$unittype[2,4], 3)`) did not show significant differences.
 
 Finally, despite ANOVA assumptions were met and the test gave us effective and reasonable outputs by comparing means, a rank-based test compares the *medians* across the groups might make up the positive skewness of salamander weights. 
 
 
 ### Summary
 
-- The annual count of Pacific gaint salamaders increased from 1993 to 2011, then fluctuated from 2011 to 2017 around a higher level. There was no apparant difference in the trend between the two forest sections (CC/OG) except salamanders in OG sections had slightly higher counts and seemed to be more robust to survival pressures. - Figure 1
+- The annual count of Pacific gaint salamaders increased from 1993 to 2011, then fluctuated from 2011 to 2017 around a higher level. There was no apparant difference in the trend between the two forest sections (CC/OG) except salamanders in OG sections had slightly higher counts and seemed to be more robust to survival pressures - **Figure 1**
 
-- Most Pacific gaint salamanders were spotted in channel cascades, followed by side-channels, then least were found in the pools. The proportions of salamaders observed in forest sections CC and OG were similar for all three channel classifications. - Table 1
+- Most Pacific gaint salamanders were spotted in channel cascades, followed by side-channels, then least were found in the pools. The proportions of salamaders observed in forest sections CC and OG were similar for all three channel classifications - **Table 1**
 
-- 
+-  There is no significant effect of forest conditions (OG/CC) on where in the channel salamanders are located (cascades/pool/side-channel)
+
+- The weight of salamanders did not differ significantly in OG and CC forest sections - **Figure 2**
+
+- Across the three channel classificantions, the weight of salamanders spotted in side-channel and pool were significantly different but not for the other two comparison - **Figure 3**
 
 
 ### References
