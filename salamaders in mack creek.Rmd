@@ -1,6 +1,6 @@
 ---
 title: 'Pacific giant salamanders in Mack Creek: Size and weight vs. channel location in old growth and clear cut forest section'
-author: "Shuhan Song"
+author: "Shuhan Song, Siya Qiu"
 date: "November 23, 2019"
 output: html_document
 ---
