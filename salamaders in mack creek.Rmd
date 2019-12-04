@@ -101,7 +101,7 @@ props_2017 %>%
   kable(col.names = c("Sections", "Cascades","Pool", "Side-channel")) %>% 
   kable_styling(bootstrap_options = "striped",
                 position = "center",
-                full_width = FALSE)
+                full_width = TRUE)
 ```
 
 ------------------------------------
