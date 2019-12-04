@@ -28,13 +28,19 @@ salamander <- read_csv("mack_creek_vertebrates.csv") %>%
 
 ### Introduction
 
-Pacific giant salamanders
+Pacific giant salamanders (*Dicamptodon tenebrosus*) is the largest terrestrial salamander in the Pacific Northwest (Pentranka 1998). Though the species is listed as Least Concern on IUCN Red List (Baillie et al. 2004), it is considered endangered in British Columbia, Canada where it has limited range (Munro 1993). Logging is the primary threat to the salamanders especially for larvae where the sapcies relied strongly on the stream for living. Research found larvae to be about four times more abundant in streams passing through old growth forest section than clear cut ones (Corn and Bury 1989). This decline is because streams impacted by fine sediments can lead to siltation, a result of logging. Increased siltation can fill rocky interstices under cover objects, where salamanders usually live and hide from predators, thus greatly dropped the population in logged areas (Welsh and Ollivier 1998). However, other studies also reported higher densities of the species in recently logged sites, which might be a result of increased primary productivity (Murphy et al. 1981). To further our understanding of logging impacts on Pacific giant salamanders, we analyzed observations in clear cut and old growth forest sections in Mack Creek to assess the influence on salamander population size, channel distribution, and weight.
+
+![A nice photo of Pacific Giant Salamander](Salamander.jpeg)
+
+*Photo credit to Will Flaxington. Downloaded from [CalPhotos](https://calphotos.berkeley.edu/cgi/img_query?enlarge=0000+0000+0116+3015) on December 3rd, 2019*
 
 ### Data and Methods
 
-The monitoring data of Pacific giant salamanders was collected and provided by [Andrews Forest LTER Site](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-and&identifier=4027&revision=12) and made accessible by EDI Data Protal. The data was collected from a section of clear cut forest and an upstream 500-year-old coniferous forest in Mack Creek (Gregory 2016). In this study, only data associated with Pacific giant salamander were used which narrowed the year range to 1993-2017. We summed and visualized the annual count of salamanders during this time period for clear cut (CC) and old growth (OG) forest sections. Then, we focused on observations in 2017 and added channel classification into analysis by selecting salamanders observed in cascades, pool, and side-channel. A chi-squared test was used to evaluate the associated effect of forest sections and channel classifications on salamander distribution. An unpaired two-sample t-test was used to test if the populations in CC and OG had equal means of weight in 2017. Lastly, we used one-way unbalanced ANOVA to compare the populations means across channel classification groups. For all tests, we checked assumptions if necessary and chose 95% significant level ($\alpha$ = 0.05) for inference. All analyses and figures were prepared using R software version 3.6.1. 
+The monitoring data of Pacific giant salamanders was collected and provided by [Andrews Forest LTER Site](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-and&identifier=4027&revision=12) and made accessible by EDI Data Protal. In addition to Pacific giant salamander, the group also collected observations for cutthroat trout (*Onchorhyncus clarkii*) and Olympic torrent salamanders (*Phyacotriton olympicus*). 
+
+The data was collected from a section of clear cut forest and an upstream 500-year-old coniferous forest in Mack Creek (Gregory 2016). In this study, only data associated with Pacific giant salamander were used which narrowed the year range to 1993-2017. We summed and visualized the annual count of salamanders during this time period for clear cut (CC) and old growth (OG) forest sections. Then, we focused on observations in 2017 and added channel classification into analysis by selecting salamanders observed in cascades, pool, and side-channel. A chi-squared test was used to evaluate the associated effect of forest sections and channel classifications on salamander distribution. An unpaired two-sample t-test was used to test if the populations in CC and OG had equal means of weight in 2017. Lastly, we used one-way unbalanced ANOVA to compare the populations means across channel classification groups. For all tests, we checked assumptions if necessary and chose 95% significant level ($\alpha$ = 0.05) for inference. All analyses and figures were prepared using R software version 3.6.1. 
 ![Mack Creek Map](Mack Creek.jpg) 
-*This map is made with [Google Earth 2018](https://www.google.com/earth/) on December 3rd, 2019.*
+*Mack Creek map was made with [Google Earth 2018](https://www.google.com/earth/) on December 3rd, 2019.*
 
 ### Results
 
@@ -260,4 +266,17 @@ Finally, despite ANOVA assumptions were met and the test gave us effective and r
 
 ### References
 
-**Gregory S. V. 2016.** Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 11/19/2019.
+**Baillie, J., C. Hilton-Taylor, and S. N. Stuart. (2004).** *2004 IUCN Red List of threatened species : a global species assessment*.
+
+**Corn, P. S., and R. Bruce Bury. (1989).** *Logging in Western Oregon: Responses of headwater habitats and stream amphibians*. Forest Ecology and Management 29:39–57.
+
+**Gregory S. V. (2016).** *Aquatic Vertebrate Population Study in Mack Creek, Andrews Experimental Forest, 1987 to present*. Environmental Data Initiative. https://doi.org/10.6073/pasta/5de64af9c11579266ef20da2ff32f702. Dataset accessed 11/19/2019.
+
+**Munro, W. T. (1993).** *Designation of endangered species, subspecies and populations by Cosewic*.
+
+**Murphy, M. L., C. P. Hawkins, and N. H. Anderson. (1981).** *Effects of Canopy Modification and Accumulated Sediment on Stream Communities*. Transactions of the American Fisheries Society 110:469–478.
+
+**Petranka, J. W. (1998).** *Salamanders of the United States and Canada*. Smithsonian Institution Press, Washington and London.
+
+**Welsh, H., and L. Ollivier. (1998).** *Stream amphibians as indicators of ecosystem stress: a case study from California’s redwoods.* Ecological Applications 8:1118–1132.
+
